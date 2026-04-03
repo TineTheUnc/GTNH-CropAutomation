@@ -56,6 +56,7 @@ local function checkChild(slot, crop, firstRun)
             
         elseif crop.name == 'emptyCrop' then
             action.placeCropStick()
+            
         elseif firstRun then
             return
 
