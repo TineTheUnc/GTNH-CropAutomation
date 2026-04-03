@@ -53,7 +53,8 @@ local function checkChild(slot, crop, firstRun)
         elseif scanner.isWeed(crop, 'working') then
             action.deweed()
             action.placeCropStick()
-
+        elseif crop.name == 'emptyCrop' then
+            action.placeCropStick()
         elseif firstRun then
             return
 
