@@ -5,11 +5,7 @@ local scanner = require('scanner')
 local config = require('config')
 local events = require('events')
 local breedRound = 0
-local lowestTier
-local lowestTierSlot
-local lowestStat
-local lowestStatSlot
-
+local parents = {nil,nil};
 -- ===================== FUNCTIONS ======================
 
 
@@ -28,7 +24,15 @@ local function checkChild(slot, crop, firstRun)
 
         elseif firstRun then
             return
-
+        elseif crop.name == parents[1].name or crop.name == parents[2].name then
+            if config.keepParents then
+                action.transplant(gps.workingSlotToPos(slot), gps.storageSlotToPos(database.nextStorageSlot()))
+                action.placeCropStick(2)
+                database.addToStorage(crop)
+            else
+                action.deweed()
+                action.placeCropStick()
+            end
         else
             action.transplant(gps.workingSlotToPos(slot), gps.storageSlotToPos(database.nextStorageSlot()))
             action.placeCropStick(2)
@@ -43,8 +47,12 @@ local function checkParent(slot, crop, firstRun)
         if scanner.isWeed(crop, 'working') then
             action.deweed()
             database.updateFarm(slot, {isCrop=true, name='emptyCrop'})
-            if not firstRun then
-                updateLowest()
+        end
+        if firstRun then
+            if parents[1] == nil then
+                parents[1] = crop
+            elseif parents[2] == nil then
+                parents[2] = crop
             end
         end
     end
@@ -52,7 +60,7 @@ end
 
 -- ====================== THE LOOP ======================
 
-local function tierOnce(firstRun)
+local function breedOnce(firstRun)
     for slot=1, config.workingFarmArea, 1 do
 
         -- Terminal Condition
@@ -69,7 +77,7 @@ local function tierOnce(firstRun)
 
         -- Terminal Condition
         if events.needExit() then
-            print('autoTier: Received Exit Command!')
+            print('autoBreed: Received Exit Command!')
             return false
         end
 
@@ -100,17 +108,16 @@ end
 
 local function main()
     action.initWork()
-    print('autoTier: Scanning Farm')
-    print(string.format('autoTier: Target Tier %s', config.autoTierThreshold))
+    print('autoBreed: Scanning Farm')
 
     -- First Run
-    tierOnce(true)
+    breedOnce(true)
     action.analyzeStorage(false)
     action.restockAll()
     updateLowest()
 
     -- Loop
-    while tierOnce(false) do
+    while breedOnce(false) do
         breedRound = breedRound + 1
         action.restockAll()
     end
@@ -126,7 +133,7 @@ local function main()
     end
 
     events.unhookEvents()
-    print('autoTier: Complete!')
+    print('autoBreed: Complete!')
 end
 
 main()

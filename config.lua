@@ -38,6 +38,8 @@ local config = {
     -- Check existing crops on the storage farm before spreading or tiering
     checkStorageBefore = false,
 
+    keepParents = false,
+
     -- =========== DO NOT CHANGE ===========
 
     -- The coordinate for the charger
