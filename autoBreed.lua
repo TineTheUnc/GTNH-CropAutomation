@@ -6,6 +6,7 @@ local config = require('config')
 local events = require('events')
 local breedRound = 0
 local parents = {nil,nil};
+local lastParentSlot = nil
 local emtySlot1 = {}
 local emtySlot2 = {}
 local target = nil
@@ -69,11 +70,18 @@ local function checkParent(slot, crop, firstRun)
                 parents[2] = crop
             end
         end
+        if lastParentSlot == nil then
+            lastParentSlot = parents[1]
+        elseif lastParentSlot == parents[1] then
+            lastParentSlot = parents[2]
+        elseif lastParentSlot == parents[2] then
+            lastParentSlot = parents[1]
+        end
     elseif crop.isCrop and (crop.name == 'air' or crop.name == 'emptyCrop') then
-        if slot % 3 == 0   then
-            table.insert(emtySlot2, slot)
-        else
+        if lastParentSlot == parents[2] then
             table.insert(emtySlot1, slot)
+        else
+            table.insert(emtySlot2, slot)
         end
     end
 end
