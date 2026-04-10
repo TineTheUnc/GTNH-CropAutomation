@@ -41,6 +41,11 @@ local function checkChild(slot, crop, firstRun)
                 action.placeCropStick()
             end
         else
+            if target ~= nil and crop.name:lower() ~= target then
+                action.deweed()
+                action.placeCropStick()
+                return
+            end
             action.transplant(gps.workingSlotToPos(slot), gps.storageSlotToPos(database.nextStorageSlot()))
             action.placeCropStick(2)
             database.addToStorage(crop)
@@ -120,10 +125,10 @@ end
 -- ======================== MAIN ========================
 local args = {...}
 local function main()
-    -- if #args > 0 then
-    --     target = args[1].lower()
-    --     print('autoBreed: Target Crop - ' .. target)
-    -- end
+    if #args > 0 then
+        target = args[1]:lower()
+        print('autoBreed: Target Crop - ' .. target)
+    end
     action.initWork()
     print('autoBreed: Scanning Farm')
 
