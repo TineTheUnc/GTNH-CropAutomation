@@ -131,7 +131,6 @@ local function main()
     breedOnce(true)
     action.analyzeStorage(false)
     action.restockAll()
-    updateLowest()
 
     -- Loop
     while breedOnce(false) do
