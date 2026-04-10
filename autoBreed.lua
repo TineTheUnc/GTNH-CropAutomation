@@ -79,8 +79,10 @@ local function checkParent(slot, crop, firstRun)
         end
     elseif crop.isCrop and (crop.name == 'air' or crop.name == 'emptyCrop') then
         if lastParentSlot == parents[2] then
+            lastParentSlot = parents[1]
             table.insert(emtySlot1, slot)
         else
+            lastParentSlot = parents[2]
             table.insert(emtySlot2, slot)
         end
     end
