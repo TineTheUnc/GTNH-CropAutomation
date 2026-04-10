@@ -30,8 +30,10 @@ local function checkChild(slot, crop, firstRun)
         elseif crop.name == parents[1].name or crop.name == parents[2].name then
             if crop.name == parents[1].name and #emtySlot1 > 0 then
                 action.transplant(gps.workingSlotToPos(slot), gps.workingSlotToPos(emtySlot1[1]))
+                table.remove(emtySlot1, 1)
             elseif crop.name == parents[2].name and #emtySlot2 > 0 then
                 action.transplant(gps.workingSlotToPos(slot), gps.workingSlotToPos(emtySlot2[1]))
+                table.remove(emtySlot2, 1)
             elseif config.keepParents then
                 action.transplant(gps.workingSlotToPos(slot), gps.storageSlotToPos(database.nextStorageSlot()))
                 action.placeCropStick(2)
@@ -67,7 +69,7 @@ local function checkParent(slot, crop, firstRun)
                 parents[2] = crop
             end
         end
-    elseif crop.isCrop and crop.name == 'air' and crop.name == 'emptyCrop' then
+    elseif crop.isCrop and (crop.name == 'air' or crop.name == 'emptyCrop') then
         if slot % 3 == 0   then
             table.insert(emtySlot2, slot)
         else
