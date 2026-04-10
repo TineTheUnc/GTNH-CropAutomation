@@ -6,6 +6,9 @@ local config = require('config')
 local events = require('events')
 local breedRound = 0
 local parents = {nil,nil};
+local emtySlot1 = {}
+local emtySlot2 = {}
+local target = nil
 -- ===================== FUNCTIONS ======================
 
 
@@ -25,7 +28,11 @@ local function checkChild(slot, crop, firstRun)
         elseif firstRun then
             return
         elseif crop.name == parents[1].name or crop.name == parents[2].name then
-            if config.keepParents then
+            if crop.name == parents[1].name and #emtySlot1 > 0 then
+                action.transplant(gps.workingSlotToPos(slot), gps.workingSlotToPos(emtySlot1[1]))
+            elseif crop.name == parents[2].name and #emtySlot2 > 0 then
+                action.transplant(gps.workingSlotToPos(slot), gps.workingSlotToPos(emtySlot2[1]))
+            elseif config.keepParents then
                 action.transplant(gps.workingSlotToPos(slot), gps.storageSlotToPos(database.nextStorageSlot()))
                 action.placeCropStick(2)
                 database.addToStorage(crop)
@@ -54,6 +61,12 @@ local function checkParent(slot, crop, firstRun)
             elseif parents[2] == nil then
                 parents[2] = crop
             end
+        end
+    elseif crop.isCrop and crop.name == 'air' and crop.name == 'emptyCrop' then
+        if slot % 3 == 0   then
+            table.insert(emtySlot2, slot)
+        else
+            table.insert(emtySlot1, slot)
         end
     end
 end
@@ -105,8 +118,12 @@ local function breedOnce(firstRun)
 end
 
 -- ======================== MAIN ========================
-
+local args = {...}
 local function main()
+    -- if #args > 0 then
+    --     target = args[1].lower()
+    --     print('autoBreed: Target Crop - ' .. target)
+    -- end
     action.initWork()
     print('autoBreed: Scanning Farm')
 

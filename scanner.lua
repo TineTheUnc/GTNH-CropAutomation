@@ -18,6 +18,7 @@ local function scan()
 
         -- FILLED CROP STICK
         else
+            print(rawResult['crop:name'])
             return {
                 isCrop=true,
                 name = rawResult['crop:name'],
