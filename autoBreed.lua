@@ -70,13 +70,6 @@ local function checkParent(slot, crop, firstRun)
                 parents[2] = crop
             end
         end
-        if lastParentSlot == nil then
-            lastParentSlot = parents[1]
-        elseif lastParentSlot == parents[1] then
-            lastParentSlot = parents[2]
-        elseif lastParentSlot == parents[2] then
-            lastParentSlot = parents[1]
-        end
     elseif crop.isCrop and (crop.name == 'air' or crop.name == 'emptyCrop') then
         if lastParentSlot == parents[2] then
             lastParentSlot = parents[1]
@@ -85,6 +78,13 @@ local function checkParent(slot, crop, firstRun)
             lastParentSlot = parents[2]
             table.insert(emtySlot2, slot)
         end
+    end
+    if lastParentSlot == nil then
+        lastParentSlot = parents[1]
+    elseif lastParentSlot == parents[1] then
+        lastParentSlot = parents[2]
+    elseif lastParentSlot == parents[2] then
+        lastParentSlot = parents[1]
     end
 end
 
