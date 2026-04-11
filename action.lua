@@ -153,7 +153,12 @@ local function transplant(src, dest)
         local crop = scanner.scan()
         if crop.name == 'air' then
             placeCropStick()
-
+            crop = scanner.scan()
+            if crop.name == 'air' then
+                database.addToStorage(crop)
+                gps.go(gps.storageSlotToPos(database.nextStorageSlot()))
+                placeCropStick()
+            end
         elseif crop.isCrop == false then
             database.addToStorage(crop)
             gps.go(gps.storageSlotToPos(database.nextStorageSlot()))
