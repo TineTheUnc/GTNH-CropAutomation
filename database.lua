@@ -8,7 +8,6 @@ local function getFarm()
     return farm
 end
 
-
 local function updateFarm(slot, crop)
     farm[slot] = crop
 end
@@ -19,6 +18,11 @@ local function getStorage()
     return storage
 end
 
+local function removeFromStorage(slot)
+    local removedCrop = storage[slot]
+    table.remove(storage, slot)
+    table.remove(reverseStorage, removedCrop.name)
+end
 
 local function resetStorage()
     storage = {}
@@ -58,5 +62,6 @@ return {
     resetStorage = resetStorage,
     addToStorage = addToStorage,
     existInStorage = existInStorage,
-    nextStorageSlot = nextStorageSlot
+    nextStorageSlot = nextStorageSlot,
+    removeFromStorage = removeFromStorage
 }
