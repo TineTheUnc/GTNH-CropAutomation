@@ -273,7 +273,7 @@ local function analyzeStorage(existingTarget)
         for slot=1, config.storageFarmArea, 1 do
             gps.go(gps.storageSlotToPos(slot))
             local crop = scanner.scan()
-            if crop.name ~= 'air' and crop.isCrop  then
+            if crop.name ~= 'air' and crop.isCrop == true then
                 if (existingTarget == true and crop.name ~= targetCropName) then
                     clearDown()
                 elseif scanner.isWeed(crop, 'storage') then
