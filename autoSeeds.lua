@@ -114,6 +114,7 @@ local function harvest()
             end
         end    
     end
+end
 
 
 local function spreadOnce(firstRun)
