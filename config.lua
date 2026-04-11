@@ -36,7 +36,7 @@ local config = {
     -- Max breeding round before termination of autoSpread or autoTier
     maxBreedRound = 1000,
     -- Check existing crops on the storage farm before spreading or tiering
-    checkStorageBefore = false,
+    checkStorageBefore = true,
 
     keepParents = false,
 
