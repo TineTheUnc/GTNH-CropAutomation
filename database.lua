@@ -26,6 +26,7 @@ end
 
 local function resetStorage()
     storage = {}
+    reverseStorage = {}
 end
 
 local function updateStorage(slot, crop)

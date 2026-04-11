@@ -90,7 +90,7 @@ end
 -- ====================== THE LOOP ======================
 
 local function harvest()
-    for slot=1, config.workingFarmArea, 1 do
+    for slot=1, config.storageFarmArea, 1 do
         -- Terminal Condition
         if events.needExit() then
             print('autoSeeds: Received Exit Command!')
