@@ -132,7 +132,7 @@ local function tierOnce(firstRun)
         end
 
         -- Terminal Condition
-        if #database.getStorage() >= config.storageFarmArea then
+        if database.isStorageFull(config.storageFarmArea) then
             print('autoTier: Storage Full!')
             return false
         end

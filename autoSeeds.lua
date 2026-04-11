@@ -127,11 +127,12 @@ local function spreadOnce(firstRun)
         end
 
         -- Terminal Condition
-        if #database.getStorage() >= config.storageFarmArea then
+        if database.isStorageFull(config.storageFarmArea) then
             print('autoSeeds: Storage Full! Harvesting Storage...')
-            while #database.getStorage()  >= 1 do
+            while not database.isStorageEmpty() do
                 harvest()
             end
+            database.resetStorage()
         end
 
         -- Terminal Condition

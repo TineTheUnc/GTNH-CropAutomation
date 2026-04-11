@@ -105,7 +105,7 @@ local function statOnce(firstRun)
     for slot=1, config.workingFarmArea, 1 do
 
         -- Terminal Condition
-        if #database.getStorage() >= config.storageFarmArea then
+        if database.isStorageFull(config.storageFarmArea) then
             print('autoStat: Storage Full!')
             return false
         end

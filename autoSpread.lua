@@ -99,7 +99,7 @@ local function spreadOnce(firstRun)
         end
 
         -- Terminal Condition
-        if #database.getStorage() >= config.storageFarmArea then
+        if database.isStorageFull(config.storageFarmArea) then
             print('autoSpread: Storage Full!')
             return false
         end

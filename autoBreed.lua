@@ -100,7 +100,7 @@ local function breedOnce(firstRun)
         end
 
         -- Terminal Condition
-        if #database.getStorage() >= config.storageFarmArea then
+        if database.isStorageFull(config.storageFarmArea) then
             print('autoBreed: Storage Full!')
             return false
         end
