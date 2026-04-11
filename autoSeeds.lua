@@ -174,8 +174,8 @@ local function main()
     print('autoSeeds: Scanning Farm')
 
     -- First Run
-    spreadOnce(true)
     action.analyzeStorage(true)
+    spreadOnce(true)
     action.restockAll()
 
     -- Loop
