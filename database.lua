@@ -21,7 +21,7 @@ end
 local function removeFromStorage(slot)
     local removedCrop = storage[slot]
     table.remove(storage, slot)
-    table.remove(reverseStorage, removedCrop.name)
+    reverseStorage[removedCrop.name] = nil
 end
 
 local function resetStorage()
