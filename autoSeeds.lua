@@ -47,7 +47,7 @@ local function checkChild(slot, crop)
                 database.updateFarm(emptySlot, crop)
 
             -- No parent is empty, put in storage
-            elseif stat >= config.autoSeedsThreshold then
+            elseif stat >= config.autoSpreadThreshold then
 
                 if config.useStorageFarm then
                     action.transplant(gps.workingSlotToPos(slot), gps.storageSlotToPos(database.nextStorageSlot()))
