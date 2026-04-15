@@ -111,6 +111,8 @@ local function harvest()
             if crop.size >= crop.max - 1 then
                 action.harvest()
                 database.removeFromStorage(slot)
+            else
+                database.removeFromStorage(slot)
             end
         end    
     end
@@ -121,18 +123,9 @@ local function spreadOnce(firstRun)
     for slot=1, config.workingFarmArea, 1 do
 
         -- Terminal Condition
-        if breedRound > config.maxBreedRound then
-            print('autoSeeds: Max Breeding Round Reached!')
-            return false
-        end
-
-        -- Terminal Condition
         if database.isStorageFull(config.storageFarmArea) then
             print('autoSeeds: Storage Full! Harvesting Storage...')
-            while not database.isStorageEmpty() do
-                harvest()
-            end
-            database.resetStorage()
+            harvest()
         end
 
         -- Terminal Condition
