@@ -70,11 +70,17 @@ local function checkParent(slot, crop, firstRun)
                 parents[2] = crop
             end
         end
+        if slot in emtySlot1 then
+            table.remove(emtySlot1, table.find(emtySlot1, slot))
+        end
+        if slot in emtySlot2 then
+            table.remove(emtySlot2, table.find(emtySlot2, slot))
+        end
     elseif crop.isCrop and (crop.name == 'air' or crop.name == 'emptyCrop') then
         if lastParentSlot == parents[2] then
             lastParentSlot = parents[1]
             table.insert(emtySlot1, slot)
-        else
+        elseif lastParentSlot == parents[1] then
             lastParentSlot = parents[2]
             table.insert(emtySlot2, slot)
         end
