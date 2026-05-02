@@ -71,10 +71,10 @@ local function checkParent(slot, crop, firstRun)
             end
         end
         if config.changeParents then
-            if slot in emtySlot1 then
+            if table.find(emtySlot1, slot) then
                 table.remove(emtySlot1, table.find(emtySlot1, slot))
             end
-            if slot in emtySlot2 then
+            if table.find(emtySlot2, slot) then
                 table.remove(emtySlot2, table.find(emtySlot2, slot))
             end
         end
