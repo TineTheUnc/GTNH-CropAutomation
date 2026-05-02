@@ -40,6 +40,8 @@ local config = {
 
     keepParents = false,
 
+    changeParents = false,
+
     -- =========== DO NOT CHANGE ===========
 
     -- The coordinate for the charger

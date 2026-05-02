@@ -28,7 +28,7 @@ local function checkChild(slot, crop, firstRun)
 
         elseif firstRun then
             return
-        elseif crop.name == parents[1].name or crop.name == parents[2].name then
+        elseif config.changeParents and (crop.name == parents[1].name or crop.name == parents[2].name) then
             if crop.name == parents[1].name and #emtySlot1 > 0 then
                 action.transplant(gps.workingSlotToPos(slot), gps.workingSlotToPos(emtySlot1[1]))
                 table.remove(emtySlot1, 1)
@@ -70,13 +70,15 @@ local function checkParent(slot, crop, firstRun)
                 parents[2] = crop
             end
         end
-        if slot in emtySlot1 then
-            table.remove(emtySlot1, table.find(emtySlot1, slot))
+        if config.changeParents then
+            if slot in emtySlot1 then
+                table.remove(emtySlot1, table.find(emtySlot1, slot))
+            end
+            if slot in emtySlot2 then
+                table.remove(emtySlot2, table.find(emtySlot2, slot))
+            end
         end
-        if slot in emtySlot2 then
-            table.remove(emtySlot2, table.find(emtySlot2, slot))
-        end
-    elseif crop.isCrop and (crop.name == 'air' or crop.name == 'emptyCrop') then
+    elseif crop.isCrop and (crop.name == 'air' or crop.name == 'emptyCrop') and config.changeParents then
         if lastParentSlot == parents[2] then
             lastParentSlot = parents[1]
             table.insert(emtySlot1, slot)
